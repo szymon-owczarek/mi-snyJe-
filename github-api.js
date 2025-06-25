@@ -1,4 +1,3 @@
-
 // ============================================
 // DEDYKOWANA KLASA GITHUB API DLA SZYMON-OWCZAREK
 // ============================================
@@ -267,7 +266,82 @@ async function fetchSzymonOwczarekProjects() {
     }
 }
 // Fallback projekty
+// Dodaj na końcu github-api.js przed ostatnim komentarzem
 
+// Fallback projekty w przypadku błędu API
+function getFallbackProjects() {
+    return [
+        {
+            name: 'portfolio-website',
+            displayName: 'Portfolio Website',
+            description: 'Responsive portfolio website built with HTML, CSS and JavaScript',
+            html_url: 'https://github.com/szymon-owczarek/portfolio',
+            language: 'JavaScript',
+            languageColor: '#f1e05a',
+            stargazers_count: 0,
+            forks_count: 0,
+            updated_at: new Date().toISOString(),
+            relativeTime: 'ostatnio',
+            isRecent: true,
+            importance: 25
+        },
+        {
+            name: 'web-projects',
+            displayName: 'Web Projects',
+            description: 'Collection of web development projects and experiments',
+            html_url: 'https://github.com/szymon-owczarek/web-projects',
+            language: 'CSS',
+            languageColor: '#563d7c',
+            stargazers_count: 0,
+            forks_count: 0,
+            updated_at: new Date(Date.now() - 30 * 24 * 60 * 60 * 1000).toISOString(),
+            relativeTime: '30 dni temu',
+            isRecent: false,
+            importance: 20
+        },
+        {
+            name: 'learning-javascript',
+            displayName: 'Learning JavaScript',
+            description: 'JavaScript exercises and learning projects',
+            html_url: 'https://github.com/szymon-owczarek/learning-js',
+            language: 'JavaScript',
+            languageColor: '#f1e05a',
+            stargazers_count: 0,
+            forks_count: 0,
+            updated_at: new Date(Date.now() - 60 * 24 * 60 * 60 * 1000).toISOString(),
+            relativeTime: '2 miesiące temu',
+            isRecent: false,
+            importance: 15
+        }
+    ];
+}
+
+// Funkcje pomocnicze dla wyświetlania błędów
+function showNoProjects(container) {
+    container.innerHTML = `
+        <div class="no-projects" style="grid-column: 1 / -1; text-align: center; padding: 40px;">
+            <h3>Brak dostępnych projektów</h3>
+            <p>Projekty będą dostępne wkrótce.</p>
+        </div>
+    `;
+}
+
+function showProjectsError(container, errorMessage) {
+    container.innerHTML = `
+        <div class="projects-error" style="grid-column: 1 / -1; text-align: center; padding: 40px;">
+            <h3>Błąd ładowania projektów</h3>
+            <p>Nie udało się załadować projektów z GitHub.</p>
+            <button onclick="retryLoadProjects()" class="btn-primary" style="margin-top: 20px;">
+                Spróbuj ponownie
+            </button>
+        </div>
+    `;
+}
+
+// Funkcja retry
+function retryLoadProjects() {
+    loadGitHubProjects();
+}
 
 // ============================================
 // GŁÓWNY KOD APLIKACJI
