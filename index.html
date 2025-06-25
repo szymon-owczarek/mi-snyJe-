@@ -1,24 +1,220 @@
-<!doctype html>
+
+<!DOCTYPE html>
 <html lang="pl">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>GitHub Profil</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portfolio - Szymon Owczarek</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <div class="github-profile">
-        <a id="github-link" href="#" target="_blank"><img id="profile-image" alt="GitHub Profile Picture"></a>
-
-        <div>
-            <h1 id="username">User Name</h1>
-            <p></p>
+<!-- Pasek nawigacji -->
+<nav class="navbar">
+    <div class="nav-container">
+        <div class="nav-logo">
+            <span>SO</span>
+        </div>
+        <ul class="nav-menu">
+            <li class="nav-item">
+                <a href="#home" class="nav-link">Home</a>
+            </li>
+            <li class="nav-item">
+                <a href="#skills" class="nav-link">Umiejętności</a>
+            </li>
+            <li class="nav-item">
+                <a href="#projects" class="nav-link">Projekty</a>
+            </li>
+            <li class="nav-item">
+                <a href="#interests" class="nav-link">Zainteresowania</a>
+            </li>
+        </ul>
+        <div class="hamburger">
+            <span class="bar"></span>
+            <span class="bar"></span>
+            <span class="bar"></span>
         </div>
     </div>
+</nav>
 
-    <h2>Ostatnie Projekty</h2>
-    <ul class="projects" id="projects-list"></ul>
+<!-- Sekcja Hero - pełny ekran -->
+<section id="home" class="hero-section">
+    <div class="hero-content">
+        <div class="profile-card">
+            <h1 class="text-reveal">Szymon Owczarek</h1>
+            <p class="subtitle">Frontend Enhusiast</p>
+            <div class="hero-buttons">
+                <a href="#skills" class="btn-primary">Umiejętności</a>
+                <a href="#projects" class="btn-secondary">Moje projekty</a>
+            </div>
+        </div>
+    </div>
+    <div class="scroll-indicator">
+        <span>Przewiń w dół</span>
+        <div class="scroll-arrow">↓</div>
+    </div>
+</section>
 
-    <script src="index.js"></script>
+<div class="container">
+    <!-- Sekcja umiejętności -->
+    <section id="skills" class="skills-section">
+        <div class="skills-card glass-effect">
+            <h2>Umiejętności</h2>
+            <div class="skills-grid">
+                <div class="skill-item">
+                    <div class="skill-header">
+                        <span class="skill-name">JavaScript</span>
+                        <div class="stars">
+                            <span class="star filled">●</span>
+                            <span class="star filled">●</span>
+                            <span class="star filled">●</span>
+                            <span class="star">○</span>
+                            <span class="star">○</span>
+                        </div>
+                    </div>
+                    <div class="skill-bar">
+                        <div class="skill-progress" data-width="60%"></div>
+                    </div>
+                </div>
+
+                <div class="skill-item">
+                    <div class="skill-header">
+                        <span class="skill-name">HTML</span>
+                        <div class="stars">
+                            <span class="star filled">●</span>
+                            <span class="star filled">●</span>
+                            <span class="star filled">●</span>
+                            <span class="star filled">●</span>
+                            <span class="star">○</span>
+                        </div>
+                    </div>
+                    <div class="skill-bar">
+                        <div class="skill-progress" data-width="80%"></div>
+                    </div>
+                </div>
+
+                <div class="skill-item">
+                    <div class="skill-header">
+                        <span class="skill-name">CSS</span>
+                        <div class="stars">
+                            <span class="star filled">●</span>
+                            <span class="star filled">●</span>
+                            <span class="star filled">●</span>
+                            <span class="star filled">●</span>
+                            <span class="star">○</span>
+                        </div>
+                    </div>
+                    <div class="skill-bar">
+                        <div class="skill-progress" data-width="80%"></div>
+                    </div>
+                </div>
+
+                <div class="skill-item">
+                    <div class="skill-header">
+                        <span class="skill-name">SQL</span>
+                        <div class="stars">
+                            <span class="star filled">●</span>
+                            <span class="star filled">●</span>
+                            <span class="star filled">●</span>
+                            <span class="star">○</span>
+                            <span class="star">○</span>
+                        </div>
+                    </div>
+                    <div class="skill-bar">
+                        <div class="skill-progress" data-width="60%"></div>
+                    </div>
+                </div>
+
+                <div class="skill-item">
+                    <div class="skill-header">
+                        <span class="skill-name">PHP</span>
+                        <div class="stars">
+                            <span class="star filled">●</span>
+                            <span class="star filled">●</span>
+                            <span class="star filled">●</span>
+                            <span class="star">○</span>
+                            <span class="star">○</span>
+                        </div>
+                    </div>
+                    <div class="skill-bar">
+                        <div class="skill-progress" data-width="60%"></div>
+                    </div>
+                </div>
+
+                <div class="skill-item">
+                    <div class="skill-header">
+                        <span class="skill-name">C++</span>
+                        <div class="stars">
+                            <span class="star filled">●</span>
+                            <span class="star filled">●</span>
+                            <span class="star">○</span>
+                            <span class="star">○</span>
+                            <span class="star">○</span>
+                        </div>
+                    </div>
+                    <div class="skill-bar">
+                        <div class="skill-progress" data-width="40%"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Sekcja projektów -->
+    <section id="projects" class="projects-section">
+        <div class="projects-card glass-effect">
+            <h2>Publiczne Projekty GitHub</h2>
+            <div id="projectsList" class="projects-grid">
+                <div class="loading">Ładowanie projektów...</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Sekcja zainteresowań -->
+    <section id="interests" class="interests-section">
+        <div class="interests-card glass-effect">
+            <h2>Zainteresowania</h2>
+            <div class="interests-grid">
+                <div class="interest-item">
+                    <div class="interest-image">
+                        <img src="progr.png" alt="Programowanie">
+                        <div class="interest-overlay">
+                        </div>
+                    </div>
+                    <div class="interest-content">
+                        <h3>Programowanie</h3>
+                    </div>
+                </div>
+
+                <div class="interest-item">
+                    <div class="interest-image">
+                        <img src="fotografia.JPG" alt="Fotografia">
+                        <div class="interest-overlay">
+                        </div>
+                    </div>
+                    <div class="interest-content">
+                        <h3>Podróże</h3>
+                    </div>
+                </div>
+
+                <div class="interest-item">
+                    <div class="interest-image">
+                        <img src="gaming.jpg_large" alt="Fotografia">
+                        <div class="interest-overlay">
+                        </div>
+                    </div>
+                    <div class="interest-content">
+                        <h3>Gry</h3>
+                    </div>
+                </div>
+
+
+            </div>
+        </div>
+    </section>
+</div>
+
+<!-- Dodaj GitHub API przed main script -->
+<script src="github-api.js"></script>
+<script src="script.js"></script>
 </body>
 </html>
