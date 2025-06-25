@@ -46,16 +46,16 @@ class GitHubProjectsFetcher {
         });
 
         if (response.status === 404) {
-            throw new Error(`Użytkownik ${this.username} nie został znaleziony na GitHub`);
+            throw new Error(`User ${this.username} was not found on GitHub`);
         }
 
         if (response.status === 403) {
             this.handleRateLimit(response);
-            throw new Error('Przekroczono limit API GitHub');
+            throw new Error('GitHub API rate limit exceeded. Please try again later.');
         }
 
         if (!response.ok) {
-            throw new Error(`Błąd API GitHub: ${response.status} ${response.statusText}`);
+            throw new Error(`github api errror: ${response.status} ${response.statusText}`);
         }
 
         const userData = await response.json();
@@ -96,7 +96,7 @@ class GitHubProjectsFetcher {
             }
         }
 
-        throw new Error('Nie udało się pobrać repozytoriów z żadnego endpoint');
+        throw new Error('Unable to fetch repositories for user: ' + this.username);
     }
 
     // Przetwórz i posortuj projekty
@@ -266,108 +266,8 @@ async function fetchSzymonOwczarekProjects() {
         return getFallbackProjects();
     }
 }
-
 // Fallback projekty
-function getFallbackProjects() {
-    return [
-        {
-            name: 'portfolio-website',
-            displayName: 'Portfolio Website',
-            description: 'Nowoczesna strona portfolio z efektami glassmorphism, smooth animations i responsywnym designem',
-            language: 'JavaScript',
-            languageColor: '#f1e05a',
-            html_url: 'https://github.com/szymon-owczarek/portfolio-website',
-            stargazers_count: 8,
-            forks_count: 3,
-            size: 2048,
-            updated_at: new Date(Date.now() - 86400000 * 2).toISOString(),
-            relativeTime: '2 dni temu',
-            isRecent: true,
-            importance: 45,
-            private: false
-        },
-        {
-            name: 'react-task-manager',
-            displayName: 'React Task Manager',
-            description: 'Zaawansowana aplikacja do zarządzania zadaniami z React, Redux, Material-UI i autentykacją',
-            language: 'TypeScript',
-            languageColor: '#2b7489',
-            html_url: 'https://github.com/szymon-owczarek/react-task-manager',
-            stargazers_count: 15,
-            forks_count: 6,
-            size: 4096,
-            updated_at: new Date(Date.now() - 86400000 * 7).toISOString(),
-            relativeTime: '1 tydzień temu',
-            isRecent: true,
-            importance: 52,
-            private: false
-        },
-        {
-            name: 'weather-api-dashboard',
-            displayName: 'Weather API Dashboard',
-            description: 'Interaktywny dashboard pogodowy z integracją OpenWeatherMap API, wykresami i prognozami',
-            language: 'JavaScript',
-            languageColor: '#f1e05a',
-            html_url: 'https://github.com/szymon-owczarek/weather-api-dashboard',
-            stargazers_count: 12,
-            forks_count: 4,
-            size: 1536,
-            updated_at: new Date(Date.now() - 86400000 * 14).toISOString(),
-            relativeTime: '2 tygodnie temu',
-            isRecent: false,
-            importance: 41,
-            private: false
-        },
-        {
-            name: 'ecommerce-backend-api',
-            displayName: 'Ecommerce Backend API',
-            description: 'Kompleksowe REST API dla sklepu internetowego z PHP, MySQL, JWT autentykacją i dokumentacją',
-            language: 'PHP',
-            languageColor: '#4F5D95',
-            html_url: 'https://github.com/szymon-owczarek/ecommerce-backend-api',
-            stargazers_count: 20,
-            forks_count: 8,
-            size: 5120,
-            updated_at: new Date(Date.now() - 86400000 * 21).toISOString(),
-            relativeTime: '3 tygodnie temu',
-            isRecent: false,
-            importance: 58,
-            private: false
-        },
-        {
-            name: 'data-visualization-charts',
-            displayName: 'Data Visualization Charts',
-            description: 'Biblioteka interaktywnych wykresów i wizualizacji danych z D3.js, Chart.js i animacjami',
-            language: 'JavaScript',
-            languageColor: '#f1e05a',
-            html_url: 'https://github.com/szymon-owczarek/data-visualization-charts',
-            stargazers_count: 9,
-            forks_count: 2,
-            size: 1024,
-            updated_at: new Date(Date.now() - 86400000 * 35).toISOString(),
-            relativeTime: '1 miesiąc temu',
-            isRecent: false,
-            importance: 35,
-            private: false
-        },
-        {
-            name: 'mobile-ui-components',
-            displayName: 'Mobile UI Components',
-            description: 'Zestaw nowoczesnych komponentów UI dla aplikacji mobilnych w CSS3, SCSS i animacjami',
-            language: 'CSS',
-            languageColor: '#563d7c',
-            html_url: 'https://github.com/szymon-owczarek/mobile-ui-components',
-            stargazers_count: 14,
-            forks_count: 7,
-            size: 768,
-            updated_at: new Date(Date.now() - 86400000 * 50).toISOString(),
-            relativeTime: '1 miesiąc temu',
-            isRecent: false,
-            importance: 38,
-            private: false
-        }
-    ].sort((a, b) => b.importance - a.importance);
-}
+
 
 // ============================================
 // GŁÓWNY KOD APLIKACJI
@@ -529,7 +429,7 @@ function createAdvancedProjectCard(project, index) {
         </div>
         
         <div class="project-description">
-            ${project.description || 'Projekt bez opisu - sprawdź kod aby dowiedzieć się więcej!'}
+            ${project.description || 'Project without description. Check it out on GitHub!'}
         </div>
         
         <div class="project-footer">
@@ -544,44 +444,13 @@ function createAdvancedProjectCard(project, index) {
         
         <div class="project-hover-overlay">
             <div class="hover-content">
-                <span class="hover-text">Kliknij aby zobaczyć na GitHub</span>
+                <span class="hover-text">Click to check it out on github</span>
                 <span class="hover-icon">🔗</span>
             </div>
         </div>
     `;
 
     return card;
-}
-
-// Pokaż brak projektów
-function showNoProjects(container) {
-    container.innerHTML = `
-        <div class="no-projects-message fade-in-up" style="grid-column: 1 / -1;">
-            <div class="no-projects-content">
-                <div class="no-projects-icon">📁</div>
-                <h3>Brak dostępnych projektów</h3>
-                <p>Nie znaleziono projektów</p>
-                <button onclick="retryLoadProjects()" class="retry-button">
-                    🔄 Spróbuj ponownie
-                </button>
-            </div>
-        </div>
-    `;
-}
-
-// Pokaż błąd projektów
-function showProjectsError(container, errorMessage) {
-    container.innerHTML = `
-        <div class="projects-error-message fade-in-up" style="grid-column: 1 / -1;">
-            <div class="error-content">
-                <div class="error-icon">⚠️</div>
-                <h3>Błąd podczas ładowania projektów</h3>
-                <button onclick="retryLoadProjects()" class="retry-button">
-                    🔄 Spróbuj ponownie
-                </button>
-            </div>
-        </div>
-    `;
 }
 
 // Funkcja retry
