@@ -797,3 +797,15 @@ body::before {
     opacity: 1;
     transform: rotate(45deg) translate(50px, 50px);
 }
+
+
+
+
+footer {
+    background: rgba(255, 255, 255, 0.9);
+    color: #000000;
+    text-align: center;
+    padding: 20px;
+    font-size: 0.9rem;
+    position: relative;
+}
