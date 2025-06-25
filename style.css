@@ -1,0 +1,154 @@
+/* Globalne style */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+}
+
+/* Tło paralaksy */
+.parallax-background {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    z-index: -1;
+}
+
+.layer {
+    position: absolute;
+    width: 200%;
+    height: 200%;
+    background-size: cover;
+    background-repeat: no-repeat;
+    will-change: transform;
+}
+
+.layer-1 {
+    background: linear-gradient(130deg, #001f3f, #0074d9);
+    opacity: 0.7;
+}
+
+.layer-2 {
+    background: linear-gradient(130deg, #003f8c, #00aaff);
+    opacity: 0.5;
+}
+
+/* GitHub profil */
+.github-profile {
+    display: flex;
+    align-items: center;
+    margin: 20px;
+}
+
+.github-profile img {
+    border-radius: 50%;
+    width: 100px;
+    height: 100px;
+    margin-right: 20px;
+}
+
+.projects {
+    list-style: none;
+    padding: 0;
+    margin: 20px;
+}
+
+.project {
+    border: 1px solid #ddd;
+    padding: 10px;
+    margin-bottom: 10px;
+    border-radius: 5px;
+}
+
+.project a {
+    color: #0366d6;
+    text-decoration: none;
+    font-weight: bold;
+}
+.layer {
+    position: absolute;
+    width: 200%;
+    height: 200%;
+    background-size: cover;
+    background-repeat: no-repeat;
+    will-change: transform;
+}
+
+.layer-1 {
+    background: linear-gradient(130deg, #001f3f, #0074d9);
+    opacity: 0.7;
+}
+
+.layer-2 {
+    background: linear-gradient(130deg, #003f8c, #00aaff);
+    opacity: 0.5;
+}
+
+/* GitHub profil */
+.github-profile {
+    display: flex;
+    align-items: center;
+    margin: 20px;
+}
+
+.github-profile img {
+    border-radius: 50%;
+    width: 100px;
+    height: 100px;
+    margin-right: 20px;
+}
+
+.projects {
+    list-style: none;
+    padding: 0;
+    margin: 20px;
+}
+
+.project {
+    border: 1px solid #ddd;
+    padding: 10px;
+    margin-bottom: 10px;
+    border-radius: 5px;
+}
+
+.project a {
+    color: #0366d6;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.github-profile {
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.github-profile img {
+    border-radius: 50%;
+    width: 100px;
+    height: 100px;
+    margin-right: 20px;
+}
+
+.projects {
+    list-style: none;
+    padding: 0;
+}
+
+.project {
+    border: 1px solid #ddd;
+    width: 30%;
+    height: 15vh;
+    padding: 10px;
+    margin-bottom: 10px;
+    border-radius: 5px;
+}
+
+.project a {
+    color: #0366d6;
+    text-decoration: none;
+    font-weight: bold;
+}
