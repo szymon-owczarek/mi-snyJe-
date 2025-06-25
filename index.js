@@ -180,7 +180,7 @@ function createAdvancedProjectCard(project, index) {
         </div>
         
         <div class="project-description">
-            ${project.description || 'Projekt bez opisu - sprawdź kod aby dowiedzieć się więcej!'}
+            ${project.description || 'Project with no description. Check it out on GitHub!'} 
         </div>
         
         <div class="project-stats-grid">
@@ -213,7 +213,7 @@ function createAdvancedProjectCard(project, index) {
         
         <div class="project-hover-overlay">
             <div class="hover-content">
-                <span class="hover-text">Kliknij aby zobaczyć na GitHub</span>
+                <span class="hover-text">Click to check it out on github</span>
                 <span class="hover-icon">🔗</span>
             </div>
         </div>
