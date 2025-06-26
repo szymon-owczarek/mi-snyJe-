@@ -1,6 +1,4 @@
-// ============================================
 // DEDYKOWANA KLASA GITHUB API DLA SZYMON-OWCZAREK
-// ============================================
 
 class GitHubProjectsFetcher {
     constructor(username = 'szymon-owczarek') {
@@ -121,42 +119,6 @@ class GitHubProjectsFetcher {
         return topProjects.map(project => this.enrichProjectData(project));
     }
 
-    // Oblicz score projektu
-    calculateProjectScore(project) {
-        let score = 0;
-
-        // Punkty za opis
-        if (project.description && project.description.length > 20) score += 10;
-        else if (project.description) score += 5;
-
-        // Punkty za gwiazdki
-        score += project.stargazers_count * 3;
-
-        // Punkty za forki
-        score += project.forks_count * 2;
-
-        // Punkty za język programowania
-        if (project.language) score += 5;
-
-        // Punkty za rozmiar (nie za duże, nie za małe)
-        if (project.size > 100 && project.size < 10000) score += 3;
-
-        // Punkty za niedawną aktywność
-        const lastUpdate = new Date(project.updated_at);
-        const daysSinceUpdate = (Date.now() - lastUpdate.getTime()) / (1000 * 60 * 60 * 24);
-
-        if (daysSinceUpdate < 30) score += 8;
-        else if (daysSinceUpdate < 90) score += 5;
-        else if (daysSinceUpdate < 365) score += 2;
-
-        // Bonus za popularne języki
-        const popularLanguages = ['JavaScript', 'TypeScript', 'Python', 'Java', 'C++', 'PHP', 'CSS', 'HTML'];
-        if (popularLanguages.includes(project.language)) score += 3;
-
-        return score;
-    }
-
-    // Wzbogać dane projektu
     enrichProjectData(project) {
         return {
             ...project,
@@ -254,8 +216,6 @@ class GitHubProjectsFetcher {
         this.cache.clear();
     }
 }
-
-// Funkcja pomocnicza do łatwego użycia
 async function fetchSzymonOwczarekProjects() {
     const fetcher = new GitHubProjectsFetcher('szymon-owczarek');
 
@@ -265,9 +225,6 @@ async function fetchSzymonOwczarekProjects() {
         return getFallbackProjects();
     }
 }
-// Fallback projekty
-// Dodaj na końcu github-api.js przed ostatnim komentarzem
-
 // Fallback projekty w przypadku błędu API
 function getFallbackProjects() {
     return [
@@ -281,38 +238,10 @@ function getFallbackProjects() {
             stargazers_count: 0,
             forks_count: 0,
             updated_at: new Date().toISOString(),
-            relativeTime: 'ostatnio',
+            relativeTime: 'new',
             isRecent: true,
             importance: 25
         },
-        {
-            name: 'web-projects',
-            displayName: 'Web Projects',
-            description: 'Collection of web development projects and experiments',
-            html_url: 'https://github.com/szymon-owczarek/web-projects',
-            language: 'CSS',
-            languageColor: '#563d7c',
-            stargazers_count: 0,
-            forks_count: 0,
-            updated_at: new Date(Date.now() - 30 * 24 * 60 * 60 * 1000).toISOString(),
-            relativeTime: '30 dni temu',
-            isRecent: false,
-            importance: 20
-        },
-        {
-            name: 'learning-javascript',
-            displayName: 'Learning JavaScript',
-            description: 'JavaScript exercises and learning projects',
-            html_url: 'https://github.com/szymon-owczarek/learning-js',
-            language: 'JavaScript',
-            languageColor: '#f1e05a',
-            stargazers_count: 0,
-            forks_count: 0,
-            updated_at: new Date(Date.now() - 60 * 24 * 60 * 60 * 1000).toISOString(),
-            relativeTime: '2 miesiące temu',
-            isRecent: false,
-            importance: 15
-        }
     ];
 }
 
@@ -320,8 +249,8 @@ function getFallbackProjects() {
 function showNoProjects(container) {
     container.innerHTML = `
         <div class="no-projects" style="grid-column: 1 / -1; text-align: center; padding: 40px;">
-            <h3>Brak dostępnych projektów</h3>
-            <p>Projekty będą dostępne wkrótce.</p>
+            <h3>No available projects/h3>
+            <p>Projects coming sooon</p>
         </div>
     `;
 }
@@ -329,10 +258,10 @@ function showNoProjects(container) {
 function showProjectsError(container, errorMessage) {
     container.innerHTML = `
         <div class="projects-error" style="grid-column: 1 / -1; text-align: center; padding: 40px;">
-            <h3>Błąd ładowania projektów</h3>
-            <p>Nie udało się załadować projektów z GitHub.</p>
+            <h3>Project loading error</h3>
+            <p>Unable to load projects from github</p>
             <button onclick="retryLoadProjects()" class="btn-primary" style="margin-top: 20px;">
-                Spróbuj ponownie
+                Try again
             </button>
         </div>
     `;
