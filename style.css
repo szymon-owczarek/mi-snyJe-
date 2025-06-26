@@ -780,6 +780,7 @@ body::before {
     -webkit-animation: rotate 4s linear infinite;
     animation: rotate 4s linear infinite;
     white-space: pre;
+    margin: 3rem;
 }
 
 
