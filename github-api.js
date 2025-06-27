@@ -119,6 +119,51 @@ class GitHubProjectsFetcher {
         return topProjects.map(project => this.enrichProjectData(project));
     }
 
+    // Oblicz punktację projektu - DODANA BRAKUJĄCA FUNKCJA
+    calculateProjectScore(project) {
+        let score = 0;
+        
+        // Punkty za gwiazdki
+        score += project.stargazers_count * 10;
+        
+        // Punkty za forki
+        score += project.forks_count * 5;
+        
+        // Punkty za rozmiar repozytorium
+        score += Math.min(project.size / 100, 20);
+        
+        // Punkty za aktualność (ostatnia aktualizacja)
+        const daysSinceUpdate = (new Date() - new Date(project.updated_at)) / (1000 * 60 * 60 * 24);
+        if (daysSinceUpdate < 30) score += 15;
+        else if (daysSinceUpdate < 90) score += 10;
+        else if (daysSinceUpdate < 365) score += 5;
+        
+        // Punkty za język programowania
+        const languageBonus = {
+            'JavaScript': 8,
+            'TypeScript': 8,
+            'HTML': 6,
+            'CSS': 6,
+            'PHP': 7,
+            'Python': 8,
+            'Java': 7,
+            'C++': 7
+        };
+        score += languageBonus[project.language] || 3;
+        
+        // Punkty za opis
+        if (project.description && project.description.length > 20) {
+            score += 5;
+        }
+        
+        // Punkty za homepage/demo
+        if (project.homepage) {
+            score += 8;
+        }
+        
+        return Math.round(score);
+    }
+
     enrichProjectData(project) {
         return {
             ...project,
