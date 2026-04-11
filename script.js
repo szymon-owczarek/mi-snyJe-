@@ -3,6 +3,9 @@
 // ============================================
 
 document.addEventListener('DOMContentLoaded', function() {
+    // Inicjalizacja motywu (light/dark)
+    initThemeToggle();
+
     // Inicjalizacja animacji scroll
     initScrollAnimations();
 
@@ -34,10 +37,10 @@ document.addEventListener('DOMContentLoaded', function() {
         const scrollIndicator = document.querySelector('.scroll-indicator');
 
         if (window.scrollY > 50) {
-            if (navbar) navbar.style.background = 'rgba(255, 255, 255, 0.95)';
+            if (navbar) navbar.style.background = getNavbarBackground(true);
             if (scrollIndicator) scrollIndicator.classList.add('hidden');
         } else {
-            if (navbar) navbar.style.background = 'rgba(255, 255, 255, 0.9)';
+            if (navbar) navbar.style.background = getNavbarBackground(false);
             if (scrollIndicator) scrollIndicator.classList.remove('hidden');
         }
     });
@@ -60,6 +63,40 @@ document.addEventListener('DOMContentLoaded', function() {
     // Aktywny link nawigacji
     updateActiveNavigation();
 });
+
+function initThemeToggle() {
+    const themeToggle = document.getElementById('themeToggle');
+    if (!themeToggle) return;
+
+    const savedTheme = localStorage.getItem('theme-preference');
+    if (savedTheme === 'dark') {
+        document.body.classList.add('theme-dark');
+        themeToggle.setAttribute('aria-pressed', 'true');
+    }
+
+    const navbar = document.querySelector('.navbar');
+    if (navbar) {
+        navbar.style.background = getNavbarBackground(window.scrollY > 50);
+    }
+
+    themeToggle.addEventListener('click', () => {
+        const darkEnabled = document.body.classList.toggle('theme-dark');
+        themeToggle.setAttribute('aria-pressed', darkEnabled ? 'true' : 'false');
+        localStorage.setItem('theme-preference', darkEnabled ? 'dark' : 'light');
+
+        if (navbar) {
+            navbar.style.background = getNavbarBackground(window.scrollY > 50);
+        }
+    });
+}
+
+function getNavbarBackground(isScrolled) {
+    const isDark = document.body.classList.contains('theme-dark');
+    if (isDark) {
+        return isScrolled ? 'rgba(13, 17, 23, 0.95)' : 'rgba(22, 27, 34, 0.9)';
+    }
+    return isScrolled ? 'rgba(255, 255, 255, 0.95)' : 'rgba(255, 255, 255, 0.9)';
+}
 
 // Funkcja efektu zmniejszania zawartości hero przy scrollowaniu
 function initHeroScrollEffect() {

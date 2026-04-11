@@ -67,6 +67,8 @@ class GitHubProjectsFetcher {
             `/users/${this.username}/repos?sort=created&direction=desc&per_page=30`
         ];
 
+        const uniqueProjects = new Map();
+
         for (const endpoint of endpoints) {
             try {
                 const response = await fetch(`${this.baseURL}${endpoint}`, {
@@ -85,7 +87,11 @@ class GitHubProjectsFetcher {
                 const projects = await response.json();
 
                 if (Array.isArray(projects) && projects.length > 0) {
-                    return projects;
+                    projects.forEach(project => {
+                        if (project && project.id) {
+                            uniqueProjects.set(project.id, project);
+                        }
+                    });
                 }
 
             } catch (error) {
@@ -93,24 +99,25 @@ class GitHubProjectsFetcher {
             }
         }
 
+        if (uniqueProjects.size > 0) {
+            return Array.from(uniqueProjects.values());
+        }
+
         throw new Error('Unable to fetch repositories for user: ' + this.username);
     }
 
     // Przetwórz i posortuj projekty
     processProjects(projects) {
-        // Filtruj tylko publiczne repozytoria
-        const publicProjects = projects.filter(project => !project.private);
+        // Filtruj tylko publiczne i nie-zforkowane repozytoria
+        const publicProjects = projects.filter(project => !project.private && !project.fork);
 
-        // Filtruj repozytoria z zawartością (nie puste)
-        const activeProjects = publicProjects.filter(project =>
-            project.size > 0 || project.stargazers_count > 0 || project.forks_count > 0
-        );
-
-        // Sortuj według ważności
-        const sortedProjects = activeProjects.sort((a, b) => {
-            const scoreA = this.calculateProjectScore(a);
-            const scoreB = this.calculateProjectScore(b);
-            return scoreB - scoreA;
+        // Sortuj tak, aby nowe projekty były na górze
+        const sortedProjects = publicProjects.sort((a, b) => {
+            const createdDiff = new Date(b.created_at) - new Date(a.created_at);
+            if (createdDiff !== 0) {
+                return createdDiff;
+            }
+            return new Date(b.updated_at) - new Date(a.updated_at);
         });
 
         // Zwróć top 6 projektów
@@ -168,9 +175,9 @@ class GitHubProjectsFetcher {
         return {
             ...project,
             displayName: this.formatProjectName(project.name),
-            relativeTime: this.getRelativeTime(project.updated_at),
+            relativeTime: this.getRelativeTime(project.created_at),
             languageColor: this.getLanguageColor(project.language),
-            isRecent: this.isRecentProject(project.updated_at),
+            isRecent: this.isRecentProject(project.created_at),
             importance: this.calculateProjectScore(project)
         };
     }
@@ -191,12 +198,12 @@ class GitHubProjectsFetcher {
         const now = new Date();
         const diffTime = Math.abs(now - date);
         const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
-
-        if (diffDays === 1) return 'wczoraj';
-        if (diffDays < 7) return `${diffDays} dni temu`;
-        if (diffDays < 30) return `${Math.ceil(diffDays / 7)} tygodni temu`;
-        if (diffDays < 365) return `${Math.ceil(diffDays / 30)} miesięcy temu`;
-        return `${Math.ceil(diffDays / 365)} lat temu`;
+       
+        if (diffDays === 1) return 'Today';
+        if (diffDays < 7) return `${diffDays} days ago`;
+        if (diffDays < 30) return `${Math.ceil(diffDays / 7)} weeks ago`;
+        if (diffDays < 365) return `${Math.ceil(diffDays / 30)} months ago`;
+        return `${Math.ceil(diffDays / 365)} years ago`;
     }
 
     // Pobierz kolor języka
@@ -348,10 +355,10 @@ document.addEventListener('DOMContentLoaded', function() {
         const scrollIndicator = document.querySelector('.scroll-indicator');
 
         if (window.scrollY > 50) {
-            navbar.style.background = 'rgba(255, 255, 255, 0.95)';
+            navbar.style.background = getNavbarBackgroundForTheme(true);
             if (scrollIndicator) scrollIndicator.classList.add('hidden');
         } else {
-            navbar.style.background = 'rgba(255, 255, 255, 0.9)';
+            navbar.style.background = getNavbarBackgroundForTheme(false);
             if (scrollIndicator) scrollIndicator.classList.remove('hidden');
         }
     });
@@ -396,6 +403,14 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
 });
+
+function getNavbarBackgroundForTheme(isScrolled) {
+    const isDark = document.body.classList.contains('theme-dark');
+    if (isDark) {
+        return isScrolled ? 'rgba(13, 17, 23, 0.95)' : 'rgba(22, 27, 34, 0.9)';
+    }
+    return isScrolled ? 'rgba(255, 255, 255, 0.95)' : 'rgba(255, 255, 255, 0.9)';
+}
 
 // ============================================
 // GITHUB PROJECTS LOADING
@@ -486,7 +501,7 @@ function createAdvancedProjectCard(project, index) {
             </div>
             <div class="project-updated">
                 <span class="update-icon">🕒</span>
-                <span class="update-text">${project.relativeTime || 'nieznana data'}</span>
+                <span class="update-text">Dodano: ${project.relativeTime || 'nieznana data'}</span>
             </div>
         </div>
         
