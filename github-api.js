@@ -479,7 +479,7 @@ function createAdvancedProjectCard(project, index) {
         window.open(project.html_url, '_blank');
     });
 
-    // Stwórz zawartość karty
+    // Zawartość karty
     card.innerHTML = `
         <div class="project-header">
             <div class="project-title-section">
@@ -501,7 +501,7 @@ function createAdvancedProjectCard(project, index) {
             </div>
             <div class="project-updated">
                 <span class="update-icon">🕒</span>
-                <span class="update-text">Dodano: ${project.relativeTime || 'nieznana data'}</span>
+                <span class="update-text">Posted: ${project.relativeTime || 'nieznana data'}</span>
             </div>
         </div>
         
@@ -829,7 +829,7 @@ const fadeInUpCSS = `
         border-radius: 12px;
         font-size: 0.8rem;
         font-weight: 500;
-        background: rgba(255, 255, 255, 0.5);
+        background: var(--bg-color);
         border: 1px solid;
     }
     
