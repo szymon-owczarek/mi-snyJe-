@@ -676,17 +676,6 @@ function animateProjectsSection(projectsSection) {
 // ADDITIONAL EFFECTS
 // ============================================
 
-// Parallax effect for scroll
-window.addEventListener('scroll', () => {
-    const scrolled = window.pageYOffset;
-    const parallaxElements = document.querySelectorAll('.parallax-element');
-
-    parallaxElements.forEach((element, index) => {
-        const speed = 0.5 + (index * 0.2);
-        const yPos = -(scrolled * speed);
-        element.style.transform = `translateY(${yPos}px)`;
-    });
-});
 
 // Enhanced hover effects for glass elements
 document.querySelectorAll('.glass-effect').forEach(element => {
@@ -700,30 +689,7 @@ document.querySelectorAll('.glass-effect').forEach(element => {
 });
 
 // Add floating background elements
-function addFloatingElements() {
-    const heroSection = document.querySelector('.hero-section');
-    if (heroSection) {
-        for (let i = 0; i < 3; i++) {
-            const element = document.createElement('div');
-            element.className = 'parallax-element';
-            element.style.cssText = `
-                position: absolute;
-                width: 100px;
-                height: 100px;
-                background: radial-gradient(circle, rgba(130, 187, 234, 0.1) 0%, transparent 70%);
-                border-radius: 50%;
-                pointer-events: none;
-                z-index: -1;
-            `;
 
-            // Random positioning
-            element.style.left = `${Math.random() * 100}%`;
-            element.style.top = `${Math.random() * 100}%`;
-
-            heroSection.appendChild(element);
-        }
-    }
-}
 
 // Initialize floating elements when page loads
 setTimeout(addFloatingElements, 1000);
