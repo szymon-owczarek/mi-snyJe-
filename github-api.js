@@ -175,7 +175,8 @@ class GitHubProjectsFetcher {
         return {
             ...project,
             displayName: this.formatProjectName(project.name),
-            relativeTime: this.getRelativeTime(project.created_at),
+            addedRelativeTime: this.getRelativeTime(project.created_at),
+            modifiedRelativeTime: this.getRelativeTime(project.updated_at),
             languageColor: this.getLanguageColor(project.language),
             isRecent: this.isRecentProject(project.created_at),
             importance: this.calculateProjectScore(project)
@@ -289,8 +290,10 @@ function getFallbackProjects() {
             languageColor: '#f1e05a',
             stargazers_count: 0,
             forks_count: 0,
+            created_at: new Date().toISOString(),
             updated_at: new Date().toISOString(),
-            relativeTime: 'new',
+            addedRelativeTime: 'new',
+            modifiedRelativeTime: 'new',
             isRecent: true,
             importance: 25
         },
@@ -500,8 +503,8 @@ function createAdvancedProjectCard(project, index) {
                 ${project.language ? `<span class="tech-tag" style="border-color: ${project.languageColor}">${project.language}</span>` : ''}
             </div>
             <div class="project-updated">
-                <span class="update-icon">🕒</span>
-                <span class="update-text">Posted: ${project.relativeTime || 'nieznana data'}</span>
+                <span class="update-row"><span class="update-icon">🕒</span><span class="update-text">Posted: ${project.addedRelativeTime || 'nieznana data'}</span></span>
+                <span class="update-row"><span class="update-icon">✏️</span><span class="update-text">Last updated: ${project.modifiedRelativeTime || 'nieznana data'}</span></span>
             </div>
         </div>
         
@@ -835,10 +838,17 @@ const fadeInUpCSS = `
     
     .project-updated {
         display: flex;
-        align-items: center;
+        flex-direction: column;
+        align-items: flex-end;
         gap: 4px;
         font-size: 0.8rem;
         opacity: 0.7;
+    }
+
+    .update-row {
+        display: flex;
+        align-items: center;
+        gap: 4px;
     }
     
     .project-hover-overlay {
