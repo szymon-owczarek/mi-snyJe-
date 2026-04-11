@@ -688,11 +688,6 @@ document.querySelectorAll('.glass-effect').forEach(element => {
     });
 });
 
-// Add floating background elements
-
-
-// Initialize floating elements when page loads
-setTimeout(addFloatingElements, 1000);
 
 // ============================================
 // CSS ANIMATIONS VIA JAVASCRIPT
