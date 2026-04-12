@@ -488,7 +488,7 @@ function createAdvancedProjectCard(project, index) {
             <div class="project-title-section">
                 <h3 class="project-name">${project.displayName || project.name}</h3>
                 <div class="project-badges">
-                    ${project.isRecent ? '<span class="badge recent-badge">🔥 Nowy</span>' : ''}
+                    ${project.isRecent ? '<span class="badge recent-badge">🔥 New</span>' : ''}
                 </div>
             </div>
             <div class="project-language-indicator" style="background-color: ${project.languageColor || '#6c757d'}"></div>
