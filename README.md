@@ -51,11 +51,7 @@ Then open the site in your browser, usually at `http://localhost:3000` when usin
 
 The projects panel fetches repositories from GitHub from my account and displays the six most relevant public repositories.
 
-If you hit GitHub API rate limits, you can provide a personal access token to increase the limit:
-
-```js
-window.GITHUB_TOKEN = 'your-token-here';
-```
+If you hit GitHub API rate limits, you can provide a personal access token to increase the limit
 
 You can also store it in `localStorage` under the key `github-token`.
 
